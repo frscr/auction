@@ -1,5 +1,6 @@
 <?php
-class RegUser{
+class RegUser
+{
 	protected $name;
 	protected $login;
 	protected $psw;
@@ -11,14 +12,16 @@ class RegUser{
 	protected $user;
 	protected $password;
 
-	function __construct($link){
+	function __construct($link)
+	{
 		$this->host = $link['host'];
 		$this->dbname = $link['db_name'];
 		$this->user = $link['user'];
 		$this->password = $link['password'];
 	}
 
-	function check_data($name=0, $login=0, $psw=0, $repsw=0, $email=0, $remail=0){
+	function check_data($name=0, $login=0, $psw=0, $repsw=0, $email=0, $remail=0)
+	{
 		$err = array('','','','');
 		$check = 0;
 		$pattern = '/^(\W)+$/i';
@@ -58,13 +61,15 @@ class RegUser{
 			
 	}
 
-	private function registration(){
+	private function registration()
+	{
 		$connect = mysqli_connect($this->host, $this->user, $this->password, $this->dbname)
 			or die("Ошибка". mysqli_error($connect));
 
 			$this->psw = password_hash($this->psw, PASSWORD_DEFAULT);
 			if(mysqli_query($connect, "INSERT INTO tbl_users(`name`, `login`, `passw`, `email`) VALUES('$this->name',
-				'$this->login', '$this->psw', '$this->email')") === TRUE){printf("Запись добалена-->".$this->psw."<--");}
+				'$this->login', '$this->psw', '$this->email')") === TRUE){printf("Запись добалена-->".$this->psw."<--");
+		    }
 
 			mysqli_close($connect);
 	}

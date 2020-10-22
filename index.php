@@ -20,8 +20,11 @@
         display: block;
       }
 */
+
 session_start();
+
 spl_autoload_register(function($model){
+
 	require_once("modelUser/$model.php");
 });
 require_once("conn.php");
