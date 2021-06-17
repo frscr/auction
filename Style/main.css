@@ -1,0 +1,82 @@
+body {
+    background-color: #D3D3D3;
+}
+
+body A:link{
+    text-decoration: none;
+}
+
+body A:hover{
+    text-decoration: underline;
+    color: #FAEBD7;
+}
+
+body A:active{
+    text-decoration: none;
+    color: #FFE4E1;
+}
+
+.user_panel{
+    width: 15em;
+    border: 2px solid #2F4F4F;
+    float: left;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 8px;
+    background-color: #778899;
+}
+.menu{
+    background-color: #778899;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 5px;
+}
+#form_do_bet{
+    width: 25em;
+    border: 2px solid #2F4F4F;
+    float: left;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 8px;
+    background-color: #778899;
+}
+#form_do_bet input, button{
+    margin: 3px;
+}
+
+#form_add_lot{
+    width: 25em;
+    border: 2px solid #2F4F4F;
+    float: left;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 8px;
+    background-color: #778899;
+}
+
+#form_add_lot input, button{
+    margin: 3px;
+}
+.list_lots{
+    border: 2px solid #2F4F4F;
+    float: left;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 8px;
+    background-color: #778899;
+}
+.even{
+   background-color: lightslategrey;
+   padding: 8px;
+
+   margin-left: 5px;
+   margin-right: 5px;
+}
+
+.not_even{
+    background-color: dimgrey;
+    padding: 8px;
+
+    margin-left: 5px;
+    margin-right: 5px;
+}
