@@ -21,6 +21,7 @@ require ("Controller/SelectLot.php");
 require ("Controller/DoBet.php");
 require ("Controller/RegistrationUser.php");
 require ("Controller/LoginUser.php");
+require ("Component/Render/Render.php");
 
 use App\Controller\Lot\AddLot;
 use App\Controller\Lot\ShowLots;
@@ -29,16 +30,18 @@ use App\Controller\Bet\SelectLot;
 use App\Controller\Bet\DoBet;
 use App\Controller\User\RegistrationUser;
 use App\Controller\User\LoginUser;
+use App\Component\Render;
+
+$render = new Render();
+$form_action = '';
+$user_panel = '';
 
 if(isset($_POST['create_lot']) && isset($_SESSION['user']))
 {
     $add_lot = new AddLot();
-    $add_lot->index($_POST['title'], 1, $_POST['price'], $_POST['step'], $_POST['deadline_date'], $_POST['deadline_time']);
+    $add_lot->index($_POST['title'], $_SESSION['user']['id'], $_POST['price'], $_POST['step'], $_POST['deadline_date'], $_POST['deadline_time']);
     $add_lot = null;
 }
-
-require_once ("Template/head.html");
-require_once ("Template/menu.html");
 
 if(isset($_POST['btn_login']))
 {
@@ -50,12 +53,12 @@ if(isset($_POST['btn_login']))
 if(!isset($_SESSION['user']))
 {
     if(!isset($_GET['reg'])) {
-        require_once("Template/login.html");
+         $form_action = $render->render('login');
     }
     else{
         if($_GET['reg'] == 1)
         {
-            require_once ("Template/reg.html");
+            $form_action = $render->render('registration');
         }
     }
 
@@ -74,22 +77,22 @@ if(isset($_SESSION['user']))
     {
         unset($_SESSION['user']);
     }
-    require ("Template/user_panel.html");
+    $render->insert(['login'=>$_SESSION['user']['login']]);
+    $user_panel = $render->render('user_panel');
 }
-
+//Вывод формы для добавления лота
 if(isset($_GET['menu']) )
 {
     if(isset($_SESSION['user'])) {
         if ($_GET['menu'] == 1) {
-            require_once("Template/add_lot.html");
+            $form_action = $render->render('form_add_lot');
         }
     }
     if($_GET['menu'] == 2) {
         $show_lots = new ShowLots();
         $list_lots = $show_lots->index();
-        foreach ($list_lots as $value) {
-            echo $value;
-        }
+        $render->insert(['list'=>$list_lots]);
+        $form_action = $render->render('list_lots');
         $list_lots = null;
         $show_lots = null;
     }
@@ -98,32 +101,31 @@ if(isset($_GET['menu']) )
         if ($_GET['menu'] == 3) {
             $show_my_lots = new ShowMyLots();
             $list_my_lots = $show_my_lots->index($_SESSION['user']['id']);
-            foreach ($list_my_lots as $value) {
-                echo $value;
-            }
+            $render->insert(['list'=>$list_my_lots]);
+            $form_action = $render->render('list_my_lots');
             $list_my_lots = null;
             $show_my_lots = null;
         }
     }
 }
-
+/*Вывод окна для ставки*/
 if(isset($_SESSION['user'])) {
     if (isset($_GET['lot_id']) && is_numeric($_GET['lot_id'])) {
         $bet = new SelectLot();
-        $select_lot = $bet->index($_GET['lot_id']);//Получаем массив выбранного лота
+        $form_action = $bet->index($_GET['lot_id']);//Получаем массив выбранного лота
         $bet = null;
-        echo $select_lot['title'].' Шаг ставки '.$select_lot['step'];
-        require("Template/do_bet.html");
+
     }
 
-    if (isset($_POST['do_bet']) && isset($select_lot))//Делаем ставку на выбранный лот
+    if (isset($_POST['do_bet']) && isset($_POST['lot_id']))//Делаем ставку на выбранный лот
     {
         $bet = new DoBet();
-        $bet->index($select_lot['id'], $_POST['step']);
+        $bet->index($_POST['lot_id'], $_POST['step']);
         $bet = null;
     }
 }
 
-//////////
-require_once ("Template/footer.html");
+$menu = $render->render('menu');
+$render->insert(['menu'=>$menu, 'form_action'=>$form_action, 'user_panel'=>$user_panel,]);
+echo $render->render('base');
 ?>

@@ -6,6 +6,7 @@
 namespace App\Controller\Bet;
 
 use App\Model\ModelBet;
+use App\Component\Render;
 
 class SelectLot
 {
@@ -13,6 +14,9 @@ class SelectLot
     {
         $bet = new ModelBet();
         $bet->setId($id);
-        return $bet->select_lot();
+        $render = new Render();
+        $vars =  $bet->select_lot();
+        $render->insert(['id'=>$vars['id'], 'title'=>$vars['title']]);
+        return $render->render('do_bet');
     }
 }
