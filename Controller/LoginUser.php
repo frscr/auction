@@ -5,7 +5,7 @@ namespace App\Controller\User;
 
 use App\Model\ModelUser;
 
-class LoginUser extends ModelUser
+class LoginUser
 {
     function index($login, $password)
     {

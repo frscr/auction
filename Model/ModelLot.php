@@ -54,9 +54,10 @@ class ModelLot extends Lot
         }
 
         $sql = $pdo->query("SELECT * FROM lots");
+        $sql->execute();
         while($row = $sql->fetch())
         {
-            $lots[] = ['id'=>$row['id'],'title'=>$row['title'],'price'=>$row['price'],'step'=>$row['step']];
+            $lots[] = ['id'=>$row['id'],'title'=>$row['title'],'price'=>$row['price'],'step'=>$row['step'], 'deadline'=>$row['deadline']];
         }
         return $lots;
     }
@@ -79,13 +80,27 @@ class ModelLot extends Lot
         $sql->execute(array('user_id'=>$this->getUserId()));
         foreach ($sql as $row)
         {
-            $lots[] = ['title'=>$row['title'], 'price'=>$row['price'], 'step'=>$row['step']];
+            $lots[] = ['id'=>$row['id'],'title'=>$row['title'], 'price'=>$row['price'], 'step'=>$row['step']];
         }
         return $lots;
     }
 
     function drop_lot()
     {
+        $constant = 'constant';
+        $charset = 'utf8';
+        $lots = [];
+        $dsn = "mysql:host={$constant('HOST')};dbname={$constant('DBNAME')};charset=$charset";
+        try
+        {
+            $pdo = new \PDO($dsn, USER, PASSU);
+        }
+        catch (\PDOException $e)
+        {
+            die("Подключение не удалось". $e ->getMessage());
+        }
+        $sql = $pdo->prepare("DELETE FROM lots WHERE id = :id AND user_id = :user_id LIMIT 1");
+        $sql->execute(array('id'=>$this->getId(), 'user_id'=>$this->getUserId()));
 
     }
 }

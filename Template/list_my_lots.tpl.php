@@ -7,6 +7,6 @@
         <?php else:?>
             <?php echo '<div class="not_even">';?>
         <?php endif;?>
-        <?php echo $item['title'].' Ставка:'.$item['price'].' Шаг:'.$item['step'].'<br></div>'; ?>
+        <?php echo '<a href="?drop='.$item['id'].'">Удалить</a>&nbsp;&nbsp;'.$item['title'].' Ставка:'.$item['price'].' Шаг:'.$item['step'].'</div>'; ?>
     <?php endforeach;?>
 </div>

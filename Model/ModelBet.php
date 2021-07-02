@@ -5,10 +5,10 @@
 
 namespace App\Model;
 
-use App\Entity\Bet;
+use App\Entity\Lot;
 use http\Message;
 
-class ModelBet extends Bet
+class ModelBet extends Lot
 {
     function select_lot(): array
     {
@@ -44,7 +44,7 @@ class ModelBet extends Bet
         $step = 0;
         $constant = 'constant';
         $charset = 'utf8';
-
+        $deadline = '';
         $dsn = "mysql:host={$constant('HOST')};dbname={$constant('DBNAME')};charset=$charset";
         try
         {
@@ -54,15 +54,28 @@ class ModelBet extends Bet
         {
             die("Подключение не удалось" . $e->getMessage());
         }
-        $sql = $pdo->prepare("SELECT price, step FROM lots WHERE id = :id");
+        $sql = $pdo->prepare("SELECT price, step, user_id, deadline FROM lots WHERE id = :id");
         $sql->bindValue(':id', $this->getId());
         $sql->execute();
         foreach ($sql as $row)
         {
             $price = $row['price'];
             $step = $row['step'];
+            $user_id = $row['user_id'];
+            $deadline = $row['deadline'];
         }
         $sql = null;
+
+        if($user_id == $this->getUserId())
+        {
+            die("Нельзя делать ставки на свои лоты");
+        }
+
+        if($deadline < date("Y-m-d H:i:s"))
+        {
+            die("Время лота истекло");
+        }
+
         if($step > $this->getStep())
         {
             die("Ставка на лот должна быть не менее чем ".$step);

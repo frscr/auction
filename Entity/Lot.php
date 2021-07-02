@@ -19,6 +19,15 @@ abstract class Lot
     private $step;
     private $deadline;
 
+    function setId(int $id)
+    {
+        if(is_int($id))
+        {
+            $this->id = $id;
+        }
+        else return false;
+    }
+
     function getId(): int
     {
         return $this->id;
@@ -47,11 +56,6 @@ abstract class Lot
     function getUserId(): int
     {
         return $this->user_id;
-    }
-
-    function getLastId(): int
-    {
-        return $this->last_id;
     }
 
     function setPrice(int $price)
@@ -90,6 +94,20 @@ abstract class Lot
     function getDeadline(): string
     {
         return $this->deadline;
+    }
+    function setLastId(int $last_id)
+    {
+        if(is_int($last_id))
+        {
+            $this->last_id = $last_id;
+        }
+        else return false;
+
+    }
+
+    function getLastId(): int
+    {
+        return $this->last_id;
     }
 
 }
