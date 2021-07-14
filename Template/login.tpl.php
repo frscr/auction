@@ -5,6 +5,7 @@
   <button name="btn_login">Войти</button>
 </form>
 <br>
-<a href="?reg=1">Регистрация</a>
+    <a href="?reg=1">Регистрация</a><br>
+    <a href="?repass=1">Забыли пароль?</a>
 <br>
 </div>

@@ -21,8 +21,7 @@ abstract class Lot
 
     function setId(int $id)
     {
-        if(is_int($id))
-        {
+        if(is_int($id)) {
             $this->id = $id;
         }
         else return false;
@@ -45,8 +44,7 @@ abstract class Lot
 
     function setUserId(int $user_id)
     {
-        if(is_int($user_id))
-        {
+        if(is_int($user_id)) {
             $this->user_id = $user_id;
         }
             else return false;
@@ -60,8 +58,7 @@ abstract class Lot
 
     function setPrice(int $price)
     {
-        if(is_int($price))
-        {
+        if(is_int($price)) {
             $this->price = $price;
         }
             else return false;
@@ -74,8 +71,7 @@ abstract class Lot
 
     function setStep(int $step)
     {
-        if(is_int($step))
-        {
+        if(is_int($step)) {
             $this->step = $step;
         }
             else return false;
@@ -85,7 +81,7 @@ abstract class Lot
     {
         return $this->step;
     }
-
+/////////Дописать фильтрация для даты
     function setDeadline($date)
     {
         $this->deadline = $date;
@@ -97,8 +93,7 @@ abstract class Lot
     }
     function setLastId(int $last_id)
     {
-        if(is_int($last_id))
-        {
+        if(is_int($last_id)) {
             $this->last_id = $last_id;
         }
         else return false;

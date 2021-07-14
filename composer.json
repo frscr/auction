@@ -1,0 +1,18 @@
+{
+    "require": {
+        "phpmailer/phpmailer": "^6.5"
+    },
+
+
+
+    "autoload": {
+        "classmap": [
+            "Component/",
+            "Controller/",
+            "Model/",
+            "Entity/"
+
+        ]
+
+    }
+}

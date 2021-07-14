@@ -11,6 +11,7 @@ class User
     private $role;
     private $email;
     private $psw;
+    private $token_repass;
 
     function getId(): int
     {
@@ -60,6 +61,16 @@ class User
     function getPsw(): string
     {
         return $this->psw;
+    }
+
+    function setTokenRepass(string $key)
+    {
+        $this->token_repass = $key;
+    }
+
+    function getTokenRepass(): string
+    {
+        return $this->token_repass;
     }
 
 }

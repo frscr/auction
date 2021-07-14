@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Lot;
 
 use App\Model\ModelLot;
 

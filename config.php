@@ -25,6 +25,7 @@ create table users
     role varchar(10) not null,
     passw varchar(255) not null,
     email varchar(255) unique,
+    token_repass varchar(12) null,
     primary key (id)
 );
  * */
